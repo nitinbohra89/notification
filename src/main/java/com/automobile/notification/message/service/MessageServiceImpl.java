@@ -49,7 +49,7 @@ public class MessageServiceImpl implements MessageService {
 
 				me=messageDAO.updateDefaultMessage(messageEntity);
 			}
-			mr.setNotificationMessage(me.``getMessage());
+			mr.setNotificationMessage(me.getMessage());
 			mr.setStatus("SUCCESS");
 
 		} catch (MessageException e) {
