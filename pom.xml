@@ -15,8 +15,8 @@
 		<org.springframework-version>4.3.4.RELEASE</org.springframework-version>
 		<jackson.version>2.7.5</jackson.version>
 		<spring-security.version>4.2.0.RELEASE</spring-security.version>
-		<appengine.version>1.9.32</appengine.version>
-        <gcloud.plugin.version>2.0.9.74.v20150814</gcloud.plugin.version>
+		<appengine.version>1.9.46</appengine.version>
+        <gcloud.plugin.version>2.0.9.121.v20160815</gcloud.plugin.version>
 	</properties>
 	
 	<dependencies>
