@@ -12,6 +12,7 @@
 		<org.springframework-version>4.3.4.RELEASE</org.springframework-version>
 		<jackson.version>2.7.5</jackson.version>
 		<spring-security.version>4.2.0.RELEASE</spring-security.version>
+		<appengine.version>1.9.32</appengine.version>
 	</properties>
 	
 	<dependencies>
@@ -104,6 +105,18 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.6.0</version>
 		</dependency>
+		
+		<!-- Google Cloud Jars -->
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${appengine.version}</version>
+		</dependency>
+				<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-endpoints</artifactId>
+			<version>${appengine.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>notification</finalName>
@@ -131,7 +144,18 @@
 				<plugin>
 					<groupId>com.google.appengine</groupId>
 					<artifactId>appengine-maven-plugin</artifactId>
-					<version>1.9.18</version>
+					<version>${appengine.version}</version>
+					<configuration>
+						<enableJarClasses>false</enableJarClasses>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.google.appengine</groupId>
+					<artifactId>gcloud-maven-plugin</artifactId>
+					<version>2.0.9.74.v20150814</version>
+					<configuration>
+						<set_default>true</set_default>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
