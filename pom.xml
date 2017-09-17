@@ -170,6 +170,7 @@
                 <version>${appengine.version}</version>
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
+                    <version>${app.version}</version>
                 </configuration>
             </plugin>
             <plugin>
