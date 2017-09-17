@@ -3,4 +3,5 @@
   <application>reference-bee-171703</application><!-- unused for Cloud SDK based tooling -->
   <version>testing</version><!-- unused for Cloud SDK based tooling -->
   <threadsafe>true</threadsafe>
+  <runtime>java8</runtime>
 </appengine-web-app>
