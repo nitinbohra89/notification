@@ -48,8 +48,8 @@ public class MessageTokensDAOImpl implements MessageTokensDAO {
 					new BeanPropertyRowMapper(MessageTokenEntity.class));
 			return tokenEntities;
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new MessageTokensException("Error in fetching Message Tokens.");
+			throw e;
+			//throw new MessageTokensException("Error in fetching Message Tokens.");
 		}
 	}
 

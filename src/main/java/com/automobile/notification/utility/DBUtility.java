@@ -14,7 +14,7 @@ public class DBUtility {
 	private JdbcTemplate jdbcTemplate=null;
 	private Connection connection=null;
 	public void initializeConnection(boolean useGoogleConnector, String cloudUrl, String localUrl, String database,
-			String instance, String username, String password, String socketFactory) {
+			String instance, String username, String password, String socketFactory) throws Exception {
 
 		try {
 			String jdbcUrl = null;
@@ -33,7 +33,7 @@ public class DBUtility {
 			
 		
 		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
+			throw e;
 		}
 	}
 
