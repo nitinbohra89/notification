@@ -20,7 +20,7 @@ public class DBUtility {
 			String jdbcUrl = null;
 			//	Class.forName("com.mysql.cj.jdbc.Driver");
 			if (useGoogleConnector) {
-			//	Class.forName("com.mysql.jdbc.GoogleDriver");
+				Class.forName("com.mysql.jdbc.Driver");
 				jdbcUrl = String.format(cloudUrl,database,instance,socketFactory,username,password);
 				connection = DriverManager.getConnection(jdbcUrl);
 		} else {
