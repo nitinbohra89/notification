@@ -23,8 +23,8 @@ public class ServiceOrderRestController {
 	@Autowired
 	private ServiceOrderService serviceOrderService;
 	
-	 @CrossOrigin
-	@GetMapping(produces="application/string; charset=UTF-8")
+	
+	@GetMapping(produces="application/x-www-form-urlencoded")
 	public ServiceOrderResponse getServiceOrders(@RequestParam String username, @RequestParam String token,
 			@RequestParam Integer index, @RequestParam String value,  HttpServletResponse response){
 		ServiceOrderSearchRequest searchRequest=new ServiceOrderSearchRequest();
