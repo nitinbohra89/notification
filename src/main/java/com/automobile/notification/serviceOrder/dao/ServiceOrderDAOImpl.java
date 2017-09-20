@@ -178,16 +178,11 @@ class RepairOrderDetailsMapper implements RowMapper<ServiceOrderDetailsEntity> {
 		serviceOrderEntity.setStoreName(rs.getString("storeName"));
 		serviceOrderEntity.setStoreAddress(rs.getString("storeAddress"));
 		serviceOrderEntity.setStoreCity(rs.getString("storeCity"));
-		System.out.println("Store Zip--"+rs.getString("storeZip"));
 		serviceOrderEntity.setStoreZipCode(rs.getString("storeZip"));
 		serviceOrderEntity.setStoreState(rs.getString("storeState"));
-		System.out.println("storePhone--"+rs.getString("storePhone"));
-		System.out.println("storeMobile--"+rs.getString("storeMobile"));
-		System.out.println("category--"+rs.getString("category"));
-		System.out.println("receiver--"+rs.getString("storePhone"));
-
-		serviceOrderEntity.setStorePhoneNo(rs.getString("storePhone"));
-		serviceOrderEntity.setStoreMobileNo(rs.getString("storeMobile"));
+	
+	//	serviceOrderEntity.setStorePhoneNo(rs.getString("storePhone"));
+	//	serviceOrderEntity.setStoreMobileNo(rs.getString("storeMobile"));
 		serviceOrderEntity.setCustomerId(rs.getString("customerId"));
 		serviceOrderEntity.setCustomerName(rs.getString("customerName"));
 		serviceOrderEntity.setCustomerAddress(rs.getString("customerAddress"));
@@ -197,12 +192,12 @@ class RepairOrderDetailsMapper implements RowMapper<ServiceOrderDetailsEntity> {
 		serviceOrderEntity.setCustomerPhoneNo(rs.getString("customerPhone"));
 		serviceOrderEntity.setCustomerMobileNo(rs.getString("customerMobile"));
 		serviceOrderEntity.setCustomerEmail(rs.getString("customerEmail"));
-		serviceOrderEntity.setCustomerCategory(rs.getString("category"));
+	//	serviceOrderEntity.setCustomerCategory(rs.getString("category"));
 		serviceOrderEntity.setServiceOrderId(rs.getString("serviceOrderId"));
 		serviceOrderEntity.setServiceOrderType(rs.getString("serviceOrderType"));
 		serviceOrderEntity.setServiceOrderOpenDate(rs.getString("serviceOrderOpenDate"));
 		serviceOrderEntity.setServiceOrderCloseDate(rs.getString("serviceOrderCloseDate"));
-		serviceOrderEntity.setReceiverName(rs.getString("receiver"));
+	//	serviceOrderEntity.setReceiverName(rs.getString("receiver"));
 		serviceOrderEntity.setOperationPerformed1(rs.getString("operation1"));
 		serviceOrderEntity.setOperationPerformed2(rs.getString("operation2"));
 		serviceOrderEntity.setMileage(rs.getString("mileage"));
