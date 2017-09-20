@@ -3,6 +3,7 @@ package com.automobile.notification.serviceOrder.restController;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,8 @@ public class ServiceOrderRestController {
 	@Autowired
 	private ServiceOrderService serviceOrderService;
 	
-	@GetMapping(produces="application/json; charset=UTF-8")
+	 @CrossOrigin
+	@GetMapping(produces="application/string; charset=UTF-8")
 	public ServiceOrderResponse getServiceOrders(@RequestParam String username, @RequestParam String token,
 			@RequestParam Integer index, @RequestParam String value,  HttpServletResponse response){
 		ServiceOrderSearchRequest searchRequest=new ServiceOrderSearchRequest();
