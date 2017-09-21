@@ -34,6 +34,8 @@ public class ServiceOrderRestController {
 	@GetMapping(produces = "application/json; charset=UTF-8")
 	public ServiceOrderResponse getServiceOrders(@RequestParam String username, @RequestParam String token,
 			@RequestParam Integer index, @RequestParam String value, HttpServletResponse response) {
+		System.out.println("getServiceOrders Controller");
+
 		ServiceOrderSearchRequest searchRequest = new ServiceOrderSearchRequest();
 		searchRequest.setSearchAttributeIndex(index);
 		searchRequest.setAttributeValue(value);
@@ -44,7 +46,8 @@ public class ServiceOrderRestController {
 	@PostMapping(produces = "application/json; charset=UTF-8")
 	public ServiceOrderResponse uploadServiceOrders(@RequestBody ServiceOrderRequest serviceOrderRequest,
 			@RequestParam String username, @RequestParam String token, HttpServletResponse response) {
-		ServiceOrderResponse sor = serviceOrderService.uploadServiceOrders(serviceOrderRequest.getServiceOrders());
+		System.out.println("getServiceOrders Controller POST");
+	ServiceOrderResponse sor = serviceOrderService.uploadServiceOrders(serviceOrderRequest.getServiceOrders());
 		return sor;
 	}
 

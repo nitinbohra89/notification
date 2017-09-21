@@ -34,7 +34,6 @@ public class MessageTokensController {
 	@GetMapping(produces = "application/json; charset=UTF-8")
 	public MessageTokensResponse getMessageTokens(@RequestParam String username,
 			@RequestParam String token, HttpServletResponse response) {
-		System.out.println("Inside getMessageTokens");
 		MessageTokensResponse tokenResponse = messageTokenService.getAllTokens(username);
 		return tokenResponse;
 	}

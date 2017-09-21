@@ -34,23 +34,24 @@ public class ServiceOrderDAOImpl implements ServiceOrderDAO {
 	private static final String GET_REPAIR_ORDER_SQL = "SELECT * FROM REPAIR_ORDER";
 	private static final String GET_REPAIR_ORDER_BY_ID_SQL = "SELECT * FROM REPAIR_ORDER WHERE ro_number=?";
 
-	private static String GET_REPAIR_ORDER_CONDITIONAL = "SELECT DL.dealer_id as dealerId,DL.dealer_name as dealerName,"
-			+ " ST.store_id as storeId,ST.store_name as storeName,ST.address as storeAddress,ST.city as storeCity,"
-			+ " ST.zipcode as storeZip,ST.state_name as storeState,ST.phone as stPhone,ST.mobile as stMobile,"
-			+ " CUST.customer_id as customerId,CUST.customer_name as customerName,CUST.address as customerAddress,"
-			+ " CUST.city as customerCity,CUST.state_name as customerState,CUST.zipcode as customerZip,"
-			+ " CUST.phone as customerPhone,CUST.mobile as customerMobile,CUST.email as customerEmail,"
-			+ " CCAT.category_name as cat,RO.ro_number as serviceOrderId,RO.ro_type as serviceOrderType,"
-			+ " RO.ro_open_date as serviceOrderOpenDate,RO.ro_close_date as serviceOrderCloseDate,RO.receiver as rec,"
-			+ " RO.operation_rerformed1 as operation1,RO.operation_rerformed2 as operation2,RO.mileage as mileage,"
-			+ " RO.next_service_due_date as nextServiceDueDate,VE.vehicle_chesis as vehicleChesis,"
-			+ " VE.license_no as vehicleLicense,MD.model_id as modelId,MD.model_name as modelName"
-			+ " FROM VEHICLE VE,REPAIR_ORDER RO,CUSTOMER CUST,STORE ST,"
-			+ " DEALER DL,CUSTOMER_CATEGORY CCAT,VEHICLE_NOTIFICATION VN,MODEL MD"
-			+ " WHERE VE.vehicle_chesis=VN.vehicle_chesis AND	VN.ro_number=RO.ro_number AND"
-			+ " VN.store_id=ST.store_id AND	VN.customer_id=CUST.customer_id AND"
-			+ " CUST.cust_category_id=CCAT.cust_category_id AND	VE.dealer_id=DL.dealer_id AND"
-			+ " VE.model_id=MD.model_id";
+	private static String GET_REPAIR_ORDER_CONDITIONAL ="SELECT DL.dealer_id as dealerId,DL.dealer_name as dealerName,"
+			+" ST.store_id as storeId,ST.store_name as storeName,ST.address as storeAddress,ST.city as storeCity,"
+			+" ST.zipcode as storeZipCode,ST.state_name as storeState,ST.phone as storePhoneNo,ST.mobile as storeMobileNo,"
+			+" CUST.customer_id as customerId,CUST.customer_name as customerName,CUST.address as customerAddress,"
+			+" CUST.city as customerCity,CUST.state_name as customerState,CUST.zipcode as customerZipCode,"
+			+" CUST.phone as customerPhoneNo,CUST.mobile as customerMobileNo,CUST.email as customerEmail,"
+			+" CCAT.category_name as customerCategory,RO.ro_number as serviceOrderId,RO.ro_type as serviceOrderType,"
+			+" RO.ro_open_date as serviceOrderOpenDate,RO.ro_close_date as serviceOrderCloseDate,RO.receiver as receiverName,"
+			+" RO.operation_rerformed1 as operationPerformed1,RO.operation_rerformed2 as operationPerformed2,RO.mileage as mileage,"
+			+" RO.next_service_due_date as nextServiceDueDate,VE.vehicle_chesis as vehicleChesisNo,"
+			+" VE.license_no as vehicleLicense,MD.model_id as vehicleModelId,MD.model_name as vehicleModelName"
+			+" FROM VEHICLE VE,REPAIR_ORDER RO,CUSTOMER CUST,STORE ST,"
+			+" DEALER DL,CUSTOMER_CATEGORY CCAT,VEHICLE_NOTIFICATION VN,MODEL MD"
+			+" WHERE VE.vehicle_chesis=VN.vehicle_chesis AND	VN.ro_number=RO.ro_number AND"
+			+" VN.store_id=ST.store_id AND	VN.customer_id=CUST.customer_id AND"
+			+" CUST.cust_category_id=CCAT.cust_category_id AND	VE.dealer_id=DL.dealer_id AND"
+			+" VE.model_id=MD.model_id";
+
 	private static final Map<Integer, String> conditionMap = new HashMap<>();
 	@Autowired(required = true)
 	private DBUtility dbUtility;
@@ -116,6 +117,8 @@ public class ServiceOrderDAOImpl implements ServiceOrderDAO {
 	public List<ServiceOrderDetailsEntity> getServiceOrders(ServiceOrderSearchRequest searchRequest)
 			throws ServiceOrderException {
 		try {
+			System.out.println("getServiceOrders DAO");
+
 			JdbcTemplate jdt = dbUtility.geJdbcTemplate();
 			String SQL_QUERY=GET_REPAIR_ORDER_CONDITIONAL;
 			if (searchRequest.getSearchAttributeIndex() != 0) {
@@ -149,6 +152,8 @@ class RepairOrderMapper implements RowMapper<ServiceOrderEntity> {
 	@Override
 	public ServiceOrderEntity mapRow(ResultSet rs, int rownum) throws SQLException {
 
+		System.out.println(rs.getRow());
+		
 		ServiceOrderEntity serviceOrderEntity = new ServiceOrderEntity();
 		serviceOrderEntity.setServiceOrderId(rs.getLong("ro_number"));
 		serviceOrderEntity.setServiceOrderType(rs.getString("ro_type"));
@@ -162,49 +167,6 @@ class RepairOrderMapper implements RowMapper<ServiceOrderEntity> {
 		serviceOrderEntity.setVehicleChesis(rs.getString("vehicle_chesis"));
 		serviceOrderEntity.setCustomerId(rs.getLong("customer_id"));
 		serviceOrderEntity.setStoreId(rs.getLong("store_id"));
-		return serviceOrderEntity;
-	}
-
-}
-
-class RepairOrderDetailsMapper implements RowMapper<ServiceOrderDetailsEntity> {
-
-	@Override
-	public ServiceOrderDetailsEntity mapRow(ResultSet rs, int rownum) throws SQLException {
-		ServiceOrderDetailsEntity serviceOrderEntity = new ServiceOrderDetailsEntity();
-		serviceOrderEntity.setDealerId(rs.getString("dealerId"));
-		serviceOrderEntity.setDealerName(rs.getString("dealerName"));
-		serviceOrderEntity.setStoreId(rs.getString("storeId"));
-		serviceOrderEntity.setStoreName(rs.getString("storeName"));
-		serviceOrderEntity.setStoreAddress(rs.getString("storeAddress"));
-		serviceOrderEntity.setStoreCity(rs.getString("storeCity"));
-		serviceOrderEntity.setStoreZipCode(rs.getString("storeZip"));
-		serviceOrderEntity.setStoreState(rs.getString("storeState"));
-		serviceOrderEntity.setStorePhoneNo(rs.getString("stPhone"));
-		serviceOrderEntity.setStoreMobileNo(rs.getString("stMobile"));
-		serviceOrderEntity.setCustomerId(rs.getString("customerId"));
-		serviceOrderEntity.setCustomerName(rs.getString("customerName"));
-		serviceOrderEntity.setCustomerAddress(rs.getString("customerAddress"));
-		serviceOrderEntity.setCustomerCity(rs.getString("customerCity"));
-		serviceOrderEntity.setCustomerState(rs.getString("customerState"));
-		serviceOrderEntity.setCustomerZipCode(rs.getString("customerZip"));
-		serviceOrderEntity.setCustomerPhoneNo(rs.getString("customerPhone"));
-		serviceOrderEntity.setCustomerMobileNo(rs.getString("customerMobile"));
-		serviceOrderEntity.setCustomerEmail(rs.getString("customerEmail"));
-		serviceOrderEntity.setCustomerCategory(rs.getString("cat"));
-		serviceOrderEntity.setServiceOrderId(rs.getString("serviceOrderId"));
-		serviceOrderEntity.setServiceOrderType(rs.getString("serviceOrderType"));
-		serviceOrderEntity.setServiceOrderOpenDate(rs.getString("serviceOrderOpenDate"));
-		serviceOrderEntity.setServiceOrderCloseDate(rs.getString("serviceOrderCloseDate"));
-		serviceOrderEntity.setReceiverName(rs.getString("rec"));
-		serviceOrderEntity.setOperationPerformed1(rs.getString("operation1"));
-		serviceOrderEntity.setOperationPerformed2(rs.getString("operation2"));
-		serviceOrderEntity.setMileage(rs.getString("mileage"));
-		serviceOrderEntity.setNextServiceDueDate(rs.getString("nextServiceDueDate"));
-		serviceOrderEntity.setVehicleChesisNo(rs.getString("vehicleChesis"));
-		serviceOrderEntity.setVehicleLicense(rs.getString("vehicleLicense"));
-		serviceOrderEntity.setVehicleModelId(rs.getString("modelId"));
-		serviceOrderEntity.setVehicleModelName(rs.getString("modelName"));
 		return serviceOrderEntity;
 	}
 

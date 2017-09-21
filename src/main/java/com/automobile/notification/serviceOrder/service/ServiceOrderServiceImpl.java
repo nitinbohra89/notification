@@ -98,6 +98,7 @@ public class ServiceOrderServiceImpl implements ServiceOrderService {
 
 	public ServiceOrderResponse getServiceOrders(ServiceOrderSearchRequest serviceOrderSearchRequest){
 		ServiceOrderResponse response = new ServiceOrderResponse();
+		System.out.println("getServiceOrders Service");
 
 		try{
 			List<ServiceOrder> serviceOrderList=new ArrayList<>();
