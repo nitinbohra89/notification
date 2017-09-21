@@ -18,35 +18,34 @@ import com.automobile.notification.serviceOrder.model.ServiceOrderSearchRequest;
 import com.automobile.notification.serviceOrder.service.ServiceOrderService;
 
 @RestController
-@RequestMapping(path="/v1/serviceOrder")
+@RequestMapping(path = "/v1/serviceOrder")
 public class ServiceOrderRestController {
 
 	@ControllerAdvice
-    static class JsonpAdvice extends AbstractJsonpResponseBodyAdvice {
-        public JsonpAdvice() {
-            super("callback");
-        }
-    }
-	
+	static class JsonpAdvice extends AbstractJsonpResponseBodyAdvice {
+		public JsonpAdvice() {
+			super("callback");
+		}
+	}
+
 	@Autowired
 	private ServiceOrderService serviceOrderService;
-	
-	@GetMapping(produces="application/json; charset=UTF-8")
+
+	@GetMapping(produces = "application/json; charset=UTF-8")
 	public ServiceOrderResponse getServiceOrders(@RequestParam String username, @RequestParam String token,
-			@RequestParam Integer index, @RequestParam String value,  HttpServletResponse response){
-		ServiceOrderSearchRequest searchRequest=new ServiceOrderSearchRequest();
+			@RequestParam Integer index, @RequestParam String value, HttpServletResponse response) {
+		ServiceOrderSearchRequest searchRequest = new ServiceOrderSearchRequest();
 		searchRequest.setSearchAttributeIndex(index);
 		searchRequest.setAttributeValue(value);
-		ServiceOrderResponse sor=serviceOrderService.getServiceOrders(searchRequest);
+		ServiceOrderResponse sor = serviceOrderService.getServiceOrders(searchRequest);
 		return sor;
 	}
-	
-	
-	@PostMapping
+
+	@PostMapping(produces = "application/json; charset=UTF-8")
 	public ServiceOrderResponse uploadServiceOrders(@RequestBody ServiceOrderRequest serviceOrderRequest,
-           @RequestParam String username, @RequestParam String token, HttpServletResponse response){
-		ServiceOrderResponse sor=serviceOrderService.uploadServiceOrders(serviceOrderRequest.getServiceOrders());
+			@RequestParam String username, @RequestParam String token, HttpServletResponse response) {
+		ServiceOrderResponse sor = serviceOrderService.uploadServiceOrders(serviceOrderRequest.getServiceOrders());
 		return sor;
 	}
-	
+
 }
