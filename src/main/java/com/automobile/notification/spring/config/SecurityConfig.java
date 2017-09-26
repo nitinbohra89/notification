@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -61,7 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/resources/**", "/registration").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                .formLogin()
+                    .authorizeRequests()
+                    .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    .and()
+                    .formLogin()
                     .loginPage("/login")
                     .permitAll()
                     .and()

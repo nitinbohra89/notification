@@ -55,7 +55,7 @@ public class MessageTokensController {
 		response.addHeader("content-type", "application/json");
 		return tokenResponse;
 	}
-	@RequestMapping(method=RequestMethod.OPTIONS ,produces = "application/json; charset=UTF-8")
+	@RequestMapping(method = RequestMethod.OPTIONS, value = "/*" ,produces = "application/json; charset=UTF-8")
 	public void getOptions(HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE");
