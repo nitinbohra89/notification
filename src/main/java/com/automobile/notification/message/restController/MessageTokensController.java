@@ -24,17 +24,12 @@ public class MessageTokensController {
 	@Autowired
 	private MessageTokensService messageTokenService;
 
-	@ControllerAdvice
-	static class JsonpAdvice extends AbstractJsonpResponseBodyAdvice {
-		public JsonpAdvice() {
-			super("callback");
-		}
-	}
-	
 	@GetMapping(produces = "application/json; charset=UTF-8")
 	public MessageTokensResponse getMessageTokens(@RequestParam String username,
 			@RequestParam String token, HttpServletResponse response) {
 		MessageTokensResponse tokenResponse = messageTokenService.getAllTokens(username);
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		return tokenResponse;
 	}
 
@@ -42,6 +37,8 @@ public class MessageTokensController {
 	public MessageTokensResponse createMessageToken(@RequestBody MessageTokenRequest tokenRequest,
 			@RequestParam String username,@RequestParam String token,HttpServletResponse response) {
 		MessageTokensResponse tokenResponse = messageTokenService.createOrUpdateToken(username,tokenRequest);
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		return tokenResponse;
 	}
 
@@ -49,6 +46,8 @@ public class MessageTokensController {
 	public MessageTokensResponse deleteToken(@RequestParam String username,@RequestParam String token,
 			@RequestParam Integer messageTokenId,HttpServletResponse response){
 		MessageTokensResponse tokenResponse = messageTokenService.deleteToken(messageTokenId);
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		return tokenResponse;
 	}
 }
