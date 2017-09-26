@@ -30,6 +30,7 @@ public class MessageTokensController {
 		MessageTokensResponse tokenResponse = messageTokenService.getAllTokens(username);
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Credentials","true");
 		return tokenResponse;
 	}
 
@@ -39,6 +40,8 @@ public class MessageTokensController {
 		MessageTokensResponse tokenResponse = messageTokenService.createOrUpdateToken(username,tokenRequest);
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Credentials","true");
+		response.addHeader("content-type", "application/json");
 		return tokenResponse;
 	}
 
@@ -48,6 +51,8 @@ public class MessageTokensController {
 		MessageTokensResponse tokenResponse = messageTokenService.deleteToken(messageTokenId);
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Credentials","true");
+		response.addHeader("content-type", "application/json");
 		return tokenResponse;
 	}
 	@RequestMapping(method=RequestMethod.OPTIONS ,produces = "application/json; charset=UTF-8")
@@ -55,7 +60,9 @@ public class MessageTokensController {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE");
 		response.addHeader("Access-Control-Max-Age", "1000");
-		response.setStatus(HttpServletResponse.SC_OK);
+		response.addHeader("Access-Control-Allow-Credentials","true");
+		response.addHeader("content-type", "application/json");
+	response.setStatus(HttpServletResponse.SC_OK);
 		
 	}
 }
