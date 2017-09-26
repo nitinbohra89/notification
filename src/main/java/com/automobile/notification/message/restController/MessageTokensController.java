@@ -1,18 +1,17 @@
 package com.automobile.notification.message.restController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.OPTIONS;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpResponseBodyAdvice;
+import org.springframework.web.servlet.View;
 
 import com.automobile.notification.message.model.MessageTokenRequest;
 import com.automobile.notification.message.model.MessageTokensResponse;
@@ -51,9 +50,11 @@ public class MessageTokensController {
 		response.addHeader("Access-Control-Allow-Origin", "*/*");
 		return tokenResponse;
 	}
-	@OPTIONS
-	public void corsMethod(HttpServletResponse response){
+	@RequestMapping(method=RequestMethod.OPTIONS)
+	public void getOptions(HttpServletResponse response) {
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE");
+		response.addHeader("Access-Control-Max-Age", "1000");
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*/*");
-	} 
+	}
 }
