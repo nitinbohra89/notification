@@ -1,6 +1,7 @@
 package com.automobile.notification.message.restController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.OPTIONS;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -50,4 +51,9 @@ public class MessageTokensController {
 		response.addHeader("Access-Control-Allow-Origin", "*/*");
 		return tokenResponse;
 	}
+	@OPTIONS
+	public void corsMethod(HttpServletResponse response){
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.addHeader("Access-Control-Allow-Origin", "*/*");
+	} 
 }
