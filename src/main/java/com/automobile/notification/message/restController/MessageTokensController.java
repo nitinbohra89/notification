@@ -38,7 +38,7 @@ public class MessageTokensController {
 			@RequestParam String username,@RequestParam String token,HttpServletResponse response) {
 		MessageTokensResponse tokenResponse = messageTokenService.createOrUpdateToken(username,tokenRequest);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Origin", "*/*");
 		return tokenResponse;
 	}
 
@@ -47,7 +47,7 @@ public class MessageTokensController {
 			@RequestParam Integer messageTokenId,HttpServletResponse response){
 		MessageTokensResponse tokenResponse = messageTokenService.deleteToken(messageTokenId);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Origin", "*/*");
 		return tokenResponse;
 	}
 }
