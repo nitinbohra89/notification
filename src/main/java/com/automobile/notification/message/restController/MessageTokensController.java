@@ -56,5 +56,6 @@ public class MessageTokensController {
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE");
 		response.addHeader("Access-Control-Max-Age", "1000");
 		response.setStatus(HttpServletResponse.SC_OK);
+		
 	}
 }
