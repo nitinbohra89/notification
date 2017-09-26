@@ -29,7 +29,7 @@ public class MessageTokensController {
 			@RequestParam String token, HttpServletResponse response) {
 		MessageTokensResponse tokenResponse = messageTokenService.getAllTokens(username);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*/*");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		return tokenResponse;
 	}
 
@@ -38,7 +38,7 @@ public class MessageTokensController {
 			@RequestParam String username,@RequestParam String token,HttpServletResponse response) {
 		MessageTokensResponse tokenResponse = messageTokenService.createOrUpdateToken(username,tokenRequest);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*/*");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		return tokenResponse;
 	}
 
@@ -47,10 +47,10 @@ public class MessageTokensController {
 			@RequestParam Integer messageTokenId,HttpServletResponse response){
 		MessageTokensResponse tokenResponse = messageTokenService.deleteToken(messageTokenId);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*/*");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		return tokenResponse;
 	}
-	@RequestMapping(method=RequestMethod.OPTIONS)
+	@RequestMapping(method=RequestMethod.OPTIONS ,produces = "application/json; charset=UTF-8")
 	public void getOptions(HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE");
