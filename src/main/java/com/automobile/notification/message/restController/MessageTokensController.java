@@ -29,7 +29,7 @@ public class MessageTokensController {
 			@RequestParam String token, HttpServletResponse response) {
 		MessageTokensResponse tokenResponse = messageTokenService.getAllTokens(username);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Origin", "*/*");
 		return tokenResponse;
 	}
 
