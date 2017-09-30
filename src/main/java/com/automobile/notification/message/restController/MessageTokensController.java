@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.View;
 
 import com.automobile.notification.message.model.MessageTokenRequest;
 import com.automobile.notification.message.model.MessageTokensResponse;
@@ -29,8 +28,8 @@ public class MessageTokensController {
 			@RequestParam String token, HttpServletResponse response) {
 		MessageTokensResponse tokenResponse = messageTokenService.getAllTokens(username);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Credentials","true");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Credentials","true");
 		return tokenResponse;
 	}
 
@@ -39,9 +38,9 @@ public class MessageTokensController {
 			@RequestParam String username,@RequestParam String token,HttpServletResponse response) {
 		MessageTokensResponse tokenResponse = messageTokenService.createOrUpdateToken(username,tokenRequest);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Credentials","true");
-		response.addHeader("content-type", "application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Credentials","true");
+		response.setHeader("content-type", "application/json");
 		return tokenResponse;
 	}
 
@@ -50,18 +49,19 @@ public class MessageTokensController {
 			@RequestParam Integer messageTokenId,HttpServletResponse response){
 		MessageTokensResponse tokenResponse = messageTokenService.deleteToken(messageTokenId);
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Credentials","true");
-		response.addHeader("content-type", "application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Credentials","true");
+		response.setHeader("content-type", "application/json");
 		return tokenResponse;
 	}
 	@RequestMapping(method = RequestMethod.OPTIONS, value = "/*" ,produces = "application/json; charset=UTF-8")
 	public void getOptions(HttpServletResponse response) {
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE");
-		response.addHeader("Access-Control-Max-Age", "1000");
-		response.addHeader("Access-Control-Allow-Credentials","true");
-		response.addHeader("content-type", "application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE");
+		response.setHeader("Access-Control-Allow-Credentials","true");
+		response.setHeader("content-type", "application/json");
+		
+		
 	response.setStatus(HttpServletResponse.SC_OK);
 		
 	}
