@@ -3,6 +3,7 @@ package com.automobile.notification.message.restController;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import com.automobile.notification.message.model.MessageTokenRequest;
 import com.automobile.notification.message.model.MessageTokensResponse;
 import com.automobile.notification.message.service.MessageTokensService;
 
+@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 @RestController
 @RequestMapping(path = "/v1/messageTokens")
 public class MessageTokensController {
