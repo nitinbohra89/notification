@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import com.automobile.notification.message.domain.MessageTokenEntity;
 import com.automobile.notification.message.exception.MessageTokensException;
+import com.automobile.notification.message.service.TestMessageServiceImpl;
 import com.automobile.notification.utility.DBUtility;
 
 @Repository("messageTokensDAO")
@@ -38,18 +40,22 @@ public class MessageTokensDAOImpl implements MessageTokensDAO {
 			+ "default_value=?,update_ts=?,updated_by=? WHERE token_id=?";
 	private static final String DELETE_TOKEN_BY_ID_SQL = "DELETE FROM MESSAGE_TOKENS WHERE token_id=?";
 
+	final static Logger logger = Logger.getLogger(MessageTokensDAOImpl.class);
+
 	@Autowired(required = true)
 	private DBUtility dbUtility;
 
 	public List<MessageTokenEntity> getAllTokens() throws MessageTokensException {
+		logger.debug("getAllTokens ::START");
 		try {
 			JdbcTemplate jdt = dbUtility.geJdbcTemplate();
 			List<MessageTokenEntity> tokenEntities = jdt.query(GET_ALL_MESSAGE_TOKENS_SQL,
 					new BeanPropertyRowMapper(MessageTokenEntity.class));
+			logger.debug("getAllTokens ::END");
 			return tokenEntities;
 		} catch (Exception e) {
-			throw e;
-			//throw new MessageTokensException("Error in fetching Message Tokens.");
+			logger.error(e.getMessage());
+			throw new MessageTokensException("Error in fetching Message Tokens.");
 		}
 	}
 

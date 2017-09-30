@@ -1,109 +1,117 @@
 package com.automobile.notification.provider.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.security.ProviderException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.automobile.notification.provider.domain.DeliveryReceiptEntity;
+import com.automobile.notification.provider.domain.ProviderAttributeEntity;
+import com.automobile.notification.provider.domain.ProviderEntity;
+import com.automobile.notification.provider.exception.DeliveryReceiptException;
+import com.automobile.notification.provider.service.ProviderServiceImpl;
 import com.automobile.notification.utility.DBUtility;
 
 @Repository("providerDAO")
 @Lazy
 @Scope("singleton")
-public class ProviderDAOImpl implements ProviderDAO{
-/*	private static final String CREATE_PROVIDER_SQL = "INSERT INTO SMS_PROVIDER "
-			+ "(provider_name,provider_url)" + "VALUES(?,?)";
-	private static final String UPDATE_PROVIDER_SQL = "UPDATE SMS_PROVIDER SET "
-			+ "provider_name=?,provider_url=?,update_ts=? WHERE provider_id=?";
-	private static final String GET_PROVIDER_SQL = "SELECT * FROM SMS_PROVIDER";
-	private static final String GET_PROVIDER_BY_ID_SQL = "SELECT * FROM SMS_PROVIDER WHERE provider_id=?";
-	private static final String DELETE_PROVIDER_SQL = "DELETE FROM SMS_PROVIDER WHERE provider_id=?";
+public class ProviderDAOImpl implements ProviderDAO {
+	final static Logger logger = Logger.getLogger(ProviderServiceImpl.class);
 
 	@Autowired(required = true)
 	private DBUtility dbUtility;
-	
-	@Override
-	public ProviderEntity create(ProviderEntity providerEntity) {
-		JdbcTemplate jdt = dbUtility.geJdbcTemplate();
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		jdt.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement pst = con.prepareStatement(CREATE_PROVIDER_SQL, new String[] { "provider_id" });
-				pst.setString(1,providerEntity.getProviderName());
-				pst.setString(2, providerEntity.getProviderUrl());
-				return pst;
-			}
-		}, keyHolder);
-		providerEntity.setProviderId(keyHolder.getKey().longValue());
-		return providerEntity;
-	}
+
+	private static final String UPDATE_DELIVERY_RECEIPT_SQL = "UPDATE SMS_SENT_REPORT SET is_success=?,error_message=?,update_ts=?updated_by=? "
+			+ "WHERE provider_message_id=?";
+	private static final String GET_DEFAULT_PROVIDER_SQL = "SELECT * FROM PROVIDER_CONFIGURATION WHERE provider_type='DEFAULT'";
+	private static final String GET_PROVIDER_ATTRIBUTES_BY_ID_SQL = "SELECT * FROM PROVIDER_ATTRIBUTES WHERE provider_id=?";
 
 	@Override
-	public ProviderEntity update(ProviderEntity providerEntity) {
-		JdbcTemplate jdt = dbUtility.geJdbcTemplate();
-		int rowCount = jdt.update(UPDATE_PROVIDER_SQL,
-				new Object[] {providerEntity.getProviderName(),
-						providerEntity.getProviderUrl(),
-						new Timestamp(new Date().getTime()),
-						providerEntity.getProviderId()});
+	public void updateDeliveryReceipt(DeliveryReceiptEntity deliveryReceipt) throws DeliveryReceiptException {
+		try {
+			JdbcTemplate jdt = dbUtility.geJdbcTemplate();
+			jdt.update(UPDATE_DELIVERY_RECEIPT_SQL,
+					new Object[] { deliveryReceipt.getStatus(), deliveryReceipt.getErrorMessage(),
+							new Timestamp(new Date().getTime()), "system", deliveryReceipt.getMessageId() });
+		} catch (Exception e) {
+			logger.error("updateDeliveryReceipt--" + e.getMessage());
+			throw new DeliveryReceiptException("Error in updating Delivery Receipt.");
+		}
 
-		if (rowCount == 0)
-			return null;
-		else
-			return providerEntity;
 	}
 
-	@Override
-	public ProviderEntity getProviderById(long providerId) {
-		JdbcTemplate jdt = dbUtility.geJdbcTemplate();
-		ProviderEntity provider = (ProviderEntity) jdt.queryForObject(GET_PROVIDER_BY_ID_SQL, new Object[] { providerId },
-				new ProviderMapper());
-		return provider;
+	public ProviderEntity getDefaultProvider() throws ProviderException {
+		try {
+			JdbcTemplate jdt = dbUtility.geJdbcTemplate();
+			ProviderEntity provider = (ProviderEntity) jdt.queryForObject(GET_DEFAULT_PROVIDER_SQL,
+					new ProviderMapper());
+			return provider;
+		} catch (EmptyResultDataAccessException e) {
+			throw new ProviderException("Default Provider is not available.");
+		} catch (Exception e) {
+			logger.error("getDefaultProvider--" + e.getMessage());
+			throw new ProviderException("Error in fetching Default Provider.");
+		}
 	}
 
-	@Override
-	public List<ProviderEntity> getProvider() {
-		JdbcTemplate jdt = dbUtility.geJdbcTemplate();
-		List<ProviderEntity> providers = jdt.query(GET_PROVIDER_SQL, new BeanPropertyRowMapper(ProviderEntity.class));
-		return providers;
-	}
+	public List<ProviderAttributeEntity> getProviderAttributes(int providerId) throws ProviderException {
+		try {
+			logger.debug("getProviderAttributes:: START");
 
-	@Override
-	public Long delete(long providerId) {
-		JdbcTemplate jdt = dbUtility.geJdbcTemplate();
-		int row = jdt.update(DELETE_PROVIDER_SQL, new Object[] { providerId });
-		if (row > 0)
-			return providerId;
-		else
-			return null;
+			JdbcTemplate jdt = dbUtility.geJdbcTemplate();
+			List<ProviderAttributeEntity> providerAttributes = jdt.query(GET_PROVIDER_ATTRIBUTES_BY_ID_SQL,new Object[]{providerId},
+					new ProviderAttributeMapper());
+			logger.debug("getProviderAttributes:: END"+ providerAttributes);
+		return providerAttributes;
+		} catch (EmptyResultDataAccessException e) {
+			logger.error(e.getMessage());
+			throw new ProviderException("Provider Attributes are not available.");
+		} catch (Exception e) {
+			logger.error("getDefaultProvider--" + e.getMessage());
+			throw new ProviderException("Error in fetching Provider Attributes.");
+		}
+
 	}
-*/
 }
-/*class ProviderMapper implements RowMapper<ProviderEntity> {
+
+class ProviderMapper implements RowMapper<ProviderEntity> {
 
 	@Override
 	public ProviderEntity mapRow(ResultSet rs, int rownum) throws SQLException {
 		ProviderEntity provider = new ProviderEntity();
-		provider.setProviderId(rs.getLong("provider_id"));
+		provider.setProviderId(rs.getInt("provider_id"));
 		provider.setProviderName(rs.getString("provider_name"));
-		provider.setProviderUrl(rs.getString("provider_url"));
-		provider.setCreateTimestamp(rs.getTimestamp("create_ts"));
-		provider.setUpdateTimestamp(rs.getTimestamp("update_ts"));
+		provider.setProviderType(rs.getString("provider_type"));
+		provider.setProviderURL(rs.getString("provider_url"));
+		provider.setProviderKey(rs.getString("provider_key"));
+		provider.setProviderSecret(rs.getString("provider_secret"));
+		provider.setProviderUsername(rs.getString("provider_username"));
+		provider.setPasssword(rs.getString("provider_password"));
 		return provider;
 	}
 }
-*/
+
+class ProviderAttributeMapper implements RowMapper<ProviderAttributeEntity> {
+
+	@Override
+	public ProviderAttributeEntity mapRow(ResultSet rs, int rownum) throws SQLException {
+		ProviderAttributeEntity providerAttributes = new ProviderAttributeEntity();
+		providerAttributes.setProviderId(rs.getInt("provider_id"));
+		providerAttributes.setAttributeName(rs.getString("attribute_name"));
+		providerAttributes.setAttributeMapping(rs.getString("attribute_mapping"));
+		providerAttributes.setAttributeValue(rs.getString("attribute_value"));
+		providerAttributes.setAttributeType(rs.getString("attribute_type"));
+		return providerAttributes;
+	}
+}

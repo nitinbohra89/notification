@@ -3,6 +3,7 @@ package com.automobile.notification.serviceOrder.restController;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import com.automobile.notification.serviceOrder.service.NotifiedOrderService;
 
 @RestController
 @RequestMapping(path="/v1/notifiedServiceOrder")
+@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 public class NotifiedServiceOrderRestController {
 
 	@Autowired
