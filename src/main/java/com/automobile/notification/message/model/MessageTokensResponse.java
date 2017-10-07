@@ -5,11 +5,20 @@ import java.util.List;
 public class MessageTokensResponse {
 
 	String username;
+	String messageTokenId;
 	String errorMessage;
 	String errorCode;
 	private String status;
 
 	List<MessageToken> messageTokens;
+
+	public String getMessageTokenId() {
+		return messageTokenId;
+	}
+
+	public void setMessageTokenId(String messageTokenId) {
+		this.messageTokenId = messageTokenId;
+	}
 
 	public String getUsername() {
 		return username;

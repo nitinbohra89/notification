@@ -75,6 +75,7 @@ public class MessageTokensServiceImpl implements MessageTokensService {
 					mtr.setErrorCode("101");
 				} else {
 					mte = messageTokensDAO.createToken(mte);
+					mtr.setMessageTokenId(mte.getTokenId().toString());
 					mtr.setStatus("SUCCESS");
 				}
 			} else {

@@ -55,7 +55,9 @@ public class NotificationIntervalServiceImpl implements NotificationIntervalServ
 					username);
 			if (entity.getIntervalId() == null) {
 				if (notificationIntervalDAO.searchNotificationByDays(entity.getDays()) == null) {
-					notificationIntervalDAO.create(entity);
+					NotificationIntervalEntity nie=notificationIntervalDAO.create(entity);
+					response.setIntervalId(nie.getIntervalId().toString());
+
 				} else {
 					response.setUsername(username);
 					response.setStatus("ERROR");

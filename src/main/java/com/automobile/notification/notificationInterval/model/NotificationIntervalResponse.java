@@ -3,12 +3,21 @@ package com.automobile.notification.notificationInterval.model;
 import java.util.List;
 
 public class NotificationIntervalResponse {
+	public String intervalId;
 	private String username;
 	private String status;
 	private String errorCode;
 	private String errorMessage;
 
 	private List<NotificationInterval> notificationIntervals;
+
+	public String getIntervalId() {
+		return intervalId;
+	}
+
+	public void setIntervalId(String intervalId) {
+		this.intervalId = intervalId;
+	}
 
 	public String getUsername() {
 		return username;

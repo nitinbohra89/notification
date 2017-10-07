@@ -19,15 +19,15 @@ public class DBUtility {
 		try {
 			String jdbcUrl = null;
 			//	Class.forName("com.mysql.cj.jdbc.Driver");
-		//	if (useGoogleConnector) {
+			if (useGoogleConnector) {
 			//	Class.forName("com.mysql.jdbc.Driver");
 				//jdbcUrl = String.format(cloudUrl,database,instance,socketFactory,username,password);
 				connection = DriverManager.getConnection(cloudUrl);
-		/*} else {
-			//	Class.forName("com.mysql.cj.jdbc.Driver");
+		} else {
+				Class.forName("com.mysql.cj.jdbc.Driver");
 				jdbcUrl = String.format(localUrl, database, instance, socketFactory);
 				connection = DriverManager.getConnection(jdbcUrl, username, password);
-		}*/
+		}
 			System.out.println("Class Loaded");
 			System.out.println("Got the connection--" + connection);
 			jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(connection, false), false);
