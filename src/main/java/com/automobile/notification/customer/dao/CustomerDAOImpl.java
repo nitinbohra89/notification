@@ -41,7 +41,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 			return customerEntity;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new CustomerException("Error in creating Dealer");
+			throw new CustomerException("Error in creating Customer");
 		}
 
 	}

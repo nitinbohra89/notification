@@ -31,12 +31,12 @@ public class CustomerServiceImpl implements CustomerService{
 
 		CustomerCategoryEntity category=customerCategoryDAO.getCustomerCategoryByName(customerCategoryEntity.getCategoryName());
 		if(category==null){
-			customerCategoryEntity=customerCategoryDAO.create(customerCategoryEntity);
+			category=customerCategoryDAO.create(customerCategoryEntity);
 		}
 		
 		CustomerEntity customer=customerDAO.getCustomerById(customerEntity.getCustomerId());
 		if(customer==null){
-			customerEntity.setCustomerCategoryId(customerCategoryEntity.getCustomerCategoryId());
+			customerEntity.setCustomerCategoryId(category.getCustomerCategoryId());
 			customerDAO.create(customerEntity);
 		}
 	}

@@ -11,7 +11,7 @@ import com.automobile.notification.vehicle.exception.VehicleNotificationExceptio
 
 @Service("vehicleNotificationService")
 public class VehicleNotificationServiceImpl implements VehicleNotificationService {
-	private static final String DATE_FORMAT = "dd/mm/yyyy";
+	private static final String DATE_FORMAT = "dd/MM/yyyy";
 
 	@Autowired
 	VehicleNotificationDAO vehicleNotificationDAO;

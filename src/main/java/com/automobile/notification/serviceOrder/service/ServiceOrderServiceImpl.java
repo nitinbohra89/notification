@@ -23,7 +23,7 @@ import com.automobile.notification.vehicle.service.VehicleService;
 
 @Service("serviceOrderService")
 public class ServiceOrderServiceImpl implements ServiceOrderService {
-	private static final String DATE_FORMAT = "dd/mm/yyyy";
+	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	@Autowired
 	CustomerService customerService;
 	@Autowired

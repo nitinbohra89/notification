@@ -34,6 +34,7 @@ public class MessageTokensServiceImpl implements MessageTokensService {
 			return response;
 
 		} catch (Exception e) {
+			response.setStatus("ERROR");
 			response.setErrorCode("100");
 			response.setErrorCode("Error in Fetching Message Tokens.");
 		}

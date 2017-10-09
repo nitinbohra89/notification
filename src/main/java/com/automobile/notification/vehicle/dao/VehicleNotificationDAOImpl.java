@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -16,6 +17,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.automobile.notification.utility.DBUtility;
+import com.automobile.notification.utility.DateUtility;
 import com.automobile.notification.vehicle.domain.VehicleNotificationEntity;
 import com.automobile.notification.vehicle.exception.VehicleException;
 import com.automobile.notification.vehicle.exception.VehicleNotificationException;
@@ -34,6 +36,7 @@ public class VehicleNotificationDAOImpl implements VehicleNotificationDAO {
 	private static final String GET_VNOTIFICATION_BY_VEHICLE_ID_SQL = "SELECT * FROM VEHICLE_NOTIFICATION WHERE vehicle_chesis=?";
 	private static final String GET_VNOTIFICATION_BY_STORE_ID_SQL = "SELECT * FROM VEHICLE_NOTIFICATION WHERE store_id=?";
 	private static final String DELETE_VNOTIFICATION_SQL = "DELETE FROM VEHICLE_NOTIFICATION WHERE vehicle_id=?  AND store_id=?";
+	final static Logger logger = Logger.getLogger(DateUtility.class);
 
 	@Autowired(required = true)
 	private DBUtility dbUtility;
@@ -58,11 +61,19 @@ public class VehicleNotificationDAOImpl implements VehicleNotificationDAO {
 			throws VehicleNotificationException {
 		try {
 			JdbcTemplate jdt = dbUtility.geJdbcTemplate();
+			logger.debug("ServiceOrderCloseDate---"+new java.sql.Date(vnEntity.getServiceOrderCloseDate().getTime()));
+			logger.debug("NextServiceDueDate---"+new java.sql.Date(vnEntity.getNextServiceDueDate().getTime()));
 			jdt.update(UPDATE_VNOTIFICATION_SQL,
-					new Object[] { vnEntity.getServiceOrderId(), vnEntity.getServiceOrderCloseDate(),
-							vnEntity.getNextServiceDueDate(), vnEntity.getStoreId(), oldEntity.getLastNotifiedDate(),
-							new Integer(0), new Timestamp(new Date().getTime()), "system" },
-					vnEntity.getVehicleChesisNo(), vnEntity.getStoreId());
+					new Object[] { vnEntity.getServiceOrderId(), 
+							new java.sql.Date(vnEntity.getServiceOrderCloseDate().getTime()),
+							new java.sql.Date(vnEntity.getNextServiceDueDate().getTime()), 
+							vnEntity.getStoreId(), 
+							oldEntity.getLastNotifiedDate(),
+							new Integer(0), 
+							new Timestamp(new Date().getTime()),
+							"system",
+							vnEntity.getVehicleChesisNo()}
+					);
 			return vnEntity;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -23,7 +23,6 @@ import com.automobile.notification.utility.SMSClientUtility;
 public class TestMessageServiceImpl implements TestMessageService {
 	final static Logger logger = Logger.getLogger(TestMessageServiceImpl.class);
 	private static final String TOKEN_IDENTIFIER = "@";
-	private static final String SPACE_IDENTIFIER = " ";
 	private static final String ATTRIBUTE_TYPE1="BODY";
 	private static final String ATTRIBUTE_TYPE2="HEADER";
 	private static final String ATTRIBUTE_MAPPING_MESSAGE="MESSAGE";
@@ -40,11 +39,10 @@ public class TestMessageServiceImpl implements TestMessageService {
 		MessageResponse response = new MessageResponse();
 		try {
 			String message = parseMessage(testMessage.getMessage());
-			logger.debug("Setting Message");
+			logger.debug("Setting Message--"+message);
 			testMessage.setMessage(message);
 			logger.debug("Message has been set");
-			sendMessageUsingDefaultProvider(testMessage);
-			System.out.println(message);
+		//	sendMessageUsingDefaultProvider(testMessage);
 		} catch (Exception e) {
 			logger.debug("Error ---"+e.getMessage());
 			response.setStatus("ERROR");
@@ -68,12 +66,12 @@ public class TestMessageServiceImpl implements TestMessageService {
 					if (tokenIndex == -1) {
 						break;
 					} else {
-						spaceIndex = message.indexOf(SPACE_IDENTIFIER, tokenIndex);
+						spaceIndex = message.indexOf(TOKEN_IDENTIFIER, tokenIndex+1);
 						String token = message.substring(tokenIndex + 1, spaceIndex);
 						if (tokenMap.containsKey(token)) {
-							message = message.replace(TOKEN_IDENTIFIER + token, tokenMap.get(token));
+							message = message.replace(TOKEN_IDENTIFIER+token+TOKEN_IDENTIFIER, tokenMap.get(token));
 						}
-						index = spaceIndex + 1;
+						index = spaceIndex;
 					}
 				}
 			}

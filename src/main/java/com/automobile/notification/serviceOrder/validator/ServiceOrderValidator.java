@@ -5,7 +5,7 @@ import com.automobile.notification.serviceOrder.model.ServiceOrder;
 import com.automobile.notification.utility.DateUtility;
 
 public class ServiceOrderValidator {
-	private static String DATE_FORMAT = "DD/MM/YYYY";
+	private static String DATE_FORMAT = "dd/MM/yyyy";
 
 	public static void validateAttributes(ServiceOrder serviceOrder) throws ServiceOrderException {
 		
