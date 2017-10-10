@@ -42,7 +42,7 @@ public class TestMessageServiceImpl implements TestMessageService {
 			logger.debug("Setting Message--"+message);
 			testMessage.setMessage(message);
 			logger.debug("Message has been set");
-		//	sendMessageUsingDefaultProvider(testMessage);
+			sendMessageUsingDefaultProvider(testMessage);
 		} catch (Exception e) {
 			logger.debug("Error ---"+e.getMessage());
 			response.setStatus("ERROR");
