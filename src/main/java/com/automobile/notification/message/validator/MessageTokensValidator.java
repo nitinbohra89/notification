@@ -12,5 +12,8 @@ public class MessageTokensValidator {
 		if(tokenRequest.getTokenValue()==null){
 			throw new MessageTokensException("Token Value is requird.");
 		}
+		if(tokenRequest.getTokenName().contains(" ")){
+			throw new MessageTokensException("Token Name can not have space.");
+		}
 	}
 }

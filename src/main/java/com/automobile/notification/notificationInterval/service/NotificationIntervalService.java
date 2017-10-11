@@ -6,7 +6,7 @@ import com.automobile.notification.notificationInterval.model.NotificationInterv
 public interface NotificationIntervalService {
 	public NotificationIntervalResponse getNotificationIntervals(String username);
 
-	public NotificationIntervalResponse updateNotificationInterval(String username,
+	public NotificationIntervalResponse setNotificationInterval(String username,
 			NotificationInterval notificationInterval);
 	
 	public NotificationIntervalResponse deleteNotificationInterval(String username,Integer intervalId);

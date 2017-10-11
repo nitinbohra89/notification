@@ -33,8 +33,8 @@ public class MessageTokensDAOImpl implements MessageTokensDAO {
 
 	private static final String CREATE_MESSAGE_TOKENS_SQL = "INSERT INTO MESSAGE_TOKENS(token_name,token_type,default_value"
 			+ ",create_ts,created_by) VALUES(?,?,?,?,?)";
-	private static final String GET_ALL_MESSAGE_TOKENS_SQL = "SELECT * FROM MESSAGE_TOKENS";
-	private static final String GET_MESSAGE_TOKENS_BY_NAME_SQL = "SELECT * FROM MESSAGE_TOKENS WHERE token_name=?";
+	private static final String GET_ALL_MESSAGE_TOKENS_SQL = "SELECT * FROM MESSAGE_TOKENS ORDER BY token_name";
+	private static final String GET_MESSAGE_TOKENS_BY_NAME_SQL = "SELECT * FROM MESSAGE_TOKENS WHERE UPPER(token_name)=UPPER(?)";
 	private static final String GET_MESSAGE_TOKENS_BY_ID_SQL = "SELECT * FROM MESSAGE_TOKENS WHERE token_id=?";
 	private static final String UPDATE_MESSAGE_TOKEN_VALUE_SQL = "UPDATE MESSAGE_TOKENS SET token_name=?,"
 			+ "default_value=?,update_ts=?,updated_by=? WHERE token_id=?";

@@ -2,6 +2,7 @@ package com.automobile.notification.notificationInterval.restController;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,7 @@ import com.automobile.notification.notificationInterval.service.NotificationInte
 @RequestMapping(path = "/v1/notificationInterval")
 @CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 public class NotificationIntervalRestController {
+	final static Logger logger = Logger.getLogger(NotificationIntervalRestController.class);
 
 	@Autowired
 	NotificationIntervalService notificationIntervalService;
@@ -36,6 +38,7 @@ public class NotificationIntervalRestController {
 	@GetMapping(produces = "application/json; charset=UTF-8")
 	public NotificationIntervalResponse getNotificationIntervals(@RequestParam String username,
 			@RequestParam String token, HttpServletResponse response) {
+		logger.debug("getNotificationIntervals ::START");
 		NotificationIntervalResponse nir = notificationIntervalService.getNotificationIntervals(username);
 		return nir;
 	}
@@ -44,14 +47,16 @@ public class NotificationIntervalRestController {
 	public NotificationIntervalResponse updateNotificationInterval(@RequestParam String username,
 			@RequestParam String token, @RequestBody NotificationInterval notificationInterval,
 			HttpServletResponse response) {
-		NotificationIntervalResponse nir = notificationIntervalService.updateNotificationInterval(username,
+		logger.debug("updateNotificationInterval ::START");
+		NotificationIntervalResponse nir = notificationIntervalService.setNotificationInterval(username,
 				notificationInterval);
 		return nir;
 	}
 
 	@DeleteMapping(produces = "application/json; charset=UTF-8")
-	public NotificationIntervalResponse updateNotificationInterval(@RequestParam String username,
+	public NotificationIntervalResponse deleteNotificationInterval(@RequestParam String username,
 			@RequestParam String token, @RequestParam Integer intervalId, HttpServletResponse response) {
+		logger.debug("updateNotificationInterval ::START");
 		NotificationIntervalResponse nir = notificationIntervalService.deleteNotificationInterval(username, intervalId);
 		return nir;
 	}

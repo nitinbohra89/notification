@@ -35,32 +35,25 @@ public class TestMessageServiceImpl implements TestMessageService {
 	@Autowired
 	ProviderDAO providerDAO;
 	public MessageResponse sendTestMessage(TestMessage testMessage) {
-		logger.debug("sendTestMessage:: START");
 		MessageResponse response = new MessageResponse();
 		try {
 			String message = parseMessage(testMessage.getMessage());
-			logger.debug("Setting Message--"+message);
 			testMessage.setMessage(message);
-			logger.debug("Message has been set");
 			sendMessageUsingDefaultProvider(testMessage);
 		} catch (Exception e) {
-			logger.debug("Error ---"+e.getMessage());
 			response.setStatus("ERROR");
 			response.setErrorCode("101");
 			response.setErrorMessage("Error in sending message.");
 		}
-		logger.debug("sendTestMessage:: END");
 		return response;
 	}
 
 	private String parseMessage(String message) throws MessageTokensException {
-		logger.debug("parseMessage:: START");
 		try {
 			if (message.contains(TOKEN_IDENTIFIER)) {
 				List<MessageTokenEntity> messageTokens = messageTokensDAO.getAllTokens();
 				Map<String, String> tokenMap = getTokenMap(messageTokens);
 				int index = 0, tokenIndex = 0, spaceIndex = 0;
-				logger.debug("parseMessage:: Starting replacing Tokens.");
 				while (index < message.length()) {
 					tokenIndex = message.indexOf(TOKEN_IDENTIFIER, index);
 					if (tokenIndex == -1) {
@@ -78,11 +71,8 @@ public class TestMessageServiceImpl implements TestMessageService {
 		} catch (MessageTokensException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(e.getMessage());
 			throw new MessageTokensException("Error in parsing Message.");
 		}
-		logger.debug("parseMessage:: END");
-
 		return message;
 	}
 

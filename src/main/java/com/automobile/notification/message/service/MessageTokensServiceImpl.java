@@ -66,10 +66,7 @@ public class MessageTokensServiceImpl implements MessageTokensService {
 			MessageTokenEntity mte = convertTokenRequestToTokenEntity(tokenRequest, username);
 
 			if (tokenRequest.getTokenId() == null) {
-				System.out.println("tokenRequest.getTokenId()==null---" + tokenRequest.getTokenId());
-
 				MessageTokenEntity existingToken = messageTokensDAO.getTokenByName(tokenRequest.getTokenName());
-				// System.out.println("existingToken---"+existingToken.getTokenName());
 				if (existingToken != null) {
 					mtr.setStatus("ERROR");
 					mtr.setErrorMessage("Token with this Name already exist. Please use some other name.");

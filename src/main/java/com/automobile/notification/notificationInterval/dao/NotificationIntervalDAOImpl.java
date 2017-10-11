@@ -31,7 +31,7 @@ public class NotificationIntervalDAOImpl implements NotificationIntervalDAO {
 			+ "(days,create_ts,created_by)" + "VALUES(?,?,?)";
 	private static final String UPDATE_NOTIFICATION_SQL = "UPDATE NOTIFICATION_INTERVAL SET "
 			+ "days=?,update_ts=?,updated_by=? WHERE not_interval_id=?";
-	private static final String GET_NOTIFICATION_SQL = "SELECT * FROM NOTIFICATION_INTERVAL WHERE is_deleted='N'";
+	private static final String GET_NOTIFICATION_SQL = "SELECT * FROM NOTIFICATION_INTERVAL WHERE is_deleted='N' ORDER BY days";
 	private static final String GET_NOTIFICATION_BY_ID_SQL = "SELECT * FROM NOTIFICATION_INTERVAL "
 			+ "WHERE not_interval_id=? AND is_deleted='N'";
 	private static final String DELETE_NOTIFICATION_SQL = "UPDATE NOTIFICATION_INTERVAL SET "
