@@ -40,11 +40,15 @@ public class TestMessageServiceImpl implements TestMessageService {
 			String message = parseMessage(testMessage.getMessage());
 			testMessage.setMessage(message);
 			sendMessageUsingDefaultProvider(testMessage);
+			response.setStatus("SUCCESS");
+
 		} catch (Exception e) {
 			response.setStatus("ERROR");
 			response.setErrorCode("101");
 			response.setErrorMessage("Error in sending message.");
 		}
+		logger.debug("response---"+response.getStatus());
+
 		return response;
 	}
 
