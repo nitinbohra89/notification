@@ -2,7 +2,7 @@ package com.automobile.notification.user.model;
 
 public class User {
 	private Long userId;
-	private String userName;
+	private String username;
 	private String password;
 	private String confirmPassword;
 	private String role;
@@ -16,12 +16,12 @@ public class User {
 		this.userId = userId;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
 	}
 
 	public String getPassword() {

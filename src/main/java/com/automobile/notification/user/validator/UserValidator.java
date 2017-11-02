@@ -24,12 +24,10 @@ public class UserValidator implements Validator {
         User user = (User) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty");
-        if (user.getUserName().length() < 6 || user.getUserName().length() > 32) {
+        if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
             errors.rejectValue("userName", "Size.userForm.username");
         }
-        if (userService.checkUserName(user.getUserName()) != null) {
-            errors.rejectValue("userName", "Duplicate.userForm.username");
-        }
+     
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
