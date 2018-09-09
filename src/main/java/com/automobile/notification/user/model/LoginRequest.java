@@ -1,4 +1,4 @@
-package com.automobile.notification.spring.security.model;
+package com.automobile.notification.user.model;
 
 public class LoginRequest {
 	private String username;

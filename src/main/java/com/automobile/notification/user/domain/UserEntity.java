@@ -3,9 +3,13 @@ package com.automobile.notification.user.domain;
 import java.sql.Timestamp;
 
 public class UserEntity {
-	private Long userId;
 	private String userName;
 	private String password;
+	private String name;
+	private String emailId;
+	private String mobileNo;
+	private String mobileOTP;
+	private String emailOTP;
 	private String role;
 	private Long storeId;
 	private Long createdBy;
@@ -13,12 +17,44 @@ public class UserEntity {
 	private Timestamp createTimestamp;
 	private Timestamp updateTimestamp;
 
-	public Long getUserId() {
-		return userId;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public String getMobileOTP() {
+		return mobileOTP;
+	}
+
+	public void setMobileOTP(String mobileOTP) {
+		this.mobileOTP = mobileOTP;
+	}
+
+	public String getEmailOTP() {
+		return emailOTP;
+	}
+
+	public void setEmailOTP(String emailOTP) {
+		this.emailOTP = emailOTP;
 	}
 
 	public String getUserName() {

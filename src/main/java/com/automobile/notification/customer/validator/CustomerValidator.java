@@ -2,9 +2,10 @@ package com.automobile.notification.customer.validator;
 
 import com.automobile.notification.customer.exception.CustomerCategoryException;
 import com.automobile.notification.serviceOrder.model.ServiceOrder;
+import com.automobile.notification.serviceOrder.validator.Validator;
 
-public class CustomerValidator {
-	public static void validateCustomerAttributes(ServiceOrder serviceOrder) throws CustomerCategoryException{
+public class CustomerValidator implements Validator {
+	public void validateAttributes(ServiceOrder serviceOrder) throws Exception{
 		 if(serviceOrder.getCustomerId()==null){
 			 throw new CustomerCategoryException("Customer Id is required.");
 		 }

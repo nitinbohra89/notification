@@ -34,9 +34,9 @@ public class VehicleNotificationServiceImpl implements VehicleNotificationServic
 			entity.setCustomerId(new Long(serviceOrder.getCustomerId()));
 			entity.setStoreId(new Long(serviceOrder.getStoreId()));
 			entity.setServiceOrderId(new Long(serviceOrder.getServiceOrderId()));
-			entity.setNextServiceDueDate(
-					DateUtility.convertStringToDate(DATE_FORMAT, serviceOrder.getNextServiceDueDate()));
-			entity.setServiceOrderCloseDate(DateUtility.convertStringToDate(DATE_FORMAT, serviceOrder.getServiceOrderCloseDate()));
+		//	entity.setNextServiceDueDate(
+		//			DateUtility.convertStringToDate(DATE_FORMAT, serviceOrder.getNextServiceDueDate()));
+		//	entity.setServiceOrderCloseDate(DateUtility.convertStringToDate(DATE_FORMAT, serviceOrder.getServiceOrderCloseDate()));
 			return entity;
 		} catch (Exception e) {
 			e.printStackTrace();

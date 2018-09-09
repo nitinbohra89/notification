@@ -14,37 +14,33 @@ import com.automobile.notification.customer.validator.CustomerValidator;
 import com.automobile.notification.serviceOrder.model.ServiceOrder;
 
 @Service("customerService")
-public class CustomerServiceImpl implements CustomerService{
-	
+public class CustomerServiceImpl implements CustomerService {
+
 	@Autowired
 	CustomerCategoryDAO customerCategoryDAO;
-	
+
 	@Autowired
 	CustomerDAO customerDAO;
 
-	public void processCustomer(ServiceOrder serviceOrder) throws CustomerException,CustomerCategoryException{
-		CustomerCategoryValidator.validateCustomerCategoryAttributes(serviceOrder);
-		CustomerValidator.validateCustomerAttributes(serviceOrder);
-
-		CustomerCategoryEntity customerCategoryEntity=extractCustomerCategory(serviceOrder);
-		CustomerEntity customerEntity=extractCustomer(serviceOrder);
-
-		CustomerCategoryEntity category=customerCategoryDAO.getCustomerCategoryByName(customerCategoryEntity.getCategoryName());
-		if(category==null){
-			category=customerCategoryDAO.create(customerCategoryEntity);
+	public void processCustomer(ServiceOrder serviceOrder) throws CustomerException, CustomerCategoryException {
+		CustomerCategoryEntity customerCategoryEntity = extractCustomerCategory(serviceOrder);
+		CustomerEntity customerEntity = extractCustomer(serviceOrder);
+		CustomerCategoryEntity category = customerCategoryDAO
+				.getCustomerCategoryByName(customerCategoryEntity.getCategoryName());
+		if (category == null) {
+			category = customerCategoryDAO.create(customerCategoryEntity);
 		}
-		
-		CustomerEntity customer=customerDAO.getCustomerById(customerEntity.getCustomerId());
-		if(customer==null){
+
+		CustomerEntity customer = customerDAO.getCustomerById(customerEntity.getCustomerId());
+		if (customer == null) {
 			customerEntity.setCustomerCategoryId(category.getCustomerCategoryId());
 			customerDAO.create(customerEntity);
 		}
 	}
 
-	
-	private  CustomerEntity extractCustomer(ServiceOrder serviceOrder) throws CustomerException{
-		try{
-			CustomerEntity customer=new CustomerEntity();
+	private CustomerEntity extractCustomer(ServiceOrder serviceOrder) throws CustomerException {
+		try {
+			CustomerEntity customer = new CustomerEntity();
 			customer.setCustomerName(serviceOrder.getCustomerName());
 			customer.setAddress(serviceOrder.getCustomerAddress());
 			customer.setCity(serviceOrder.getCustomerCity());
@@ -55,19 +51,20 @@ public class CustomerServiceImpl implements CustomerService{
 			customer.setStateName(serviceOrder.getCustomerState());
 			customer.setZipcode(serviceOrder.getCustomerZipCode());
 			return customer;
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw new CustomerException("Error in extracting Customer Details from Service Order.");
 		}
 	}
-	private CustomerCategoryEntity extractCustomerCategory(ServiceOrder serviceOrder) throws CustomerCategoryException{
-		try{
-		CustomerCategoryEntity customerCategory=new CustomerCategoryEntity();
-		customerCategory.setCategoryName(serviceOrder.getCustomerCategory());
-		return customerCategory;
-		}catch(Exception e){
+
+	private CustomerCategoryEntity extractCustomerCategory(ServiceOrder serviceOrder) throws CustomerCategoryException {
+		try {
+			CustomerCategoryEntity customerCategory = new CustomerCategoryEntity();
+			customerCategory.setCategoryName(serviceOrder.getCustomerCategory());
+			return customerCategory;
+		} catch (Exception e) {
 			throw new CustomerCategoryException("Error in extracting Customer Category from Service Order.");
 		}
-		
+
 	}
 
 }

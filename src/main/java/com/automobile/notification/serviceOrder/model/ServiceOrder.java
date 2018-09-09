@@ -35,6 +35,9 @@ public class ServiceOrder {
 	private String vehicleModelName;
 	private String vehicleLicense;
 	private String status;
+	private String endUserName;
+	private String endUserMobileNo;
+	private String endUserEmailId;
 	private String errorMessage;
 	private String errorCode;
 	
@@ -241,6 +244,25 @@ public class ServiceOrder {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public String getEndUserName() {
+		return endUserName;
+	}
+	public void setEndUserName(String endUserName) {
+		this.endUserName = endUserName;
+	}
+	public String getEndUserMobileNo() {
+		return endUserMobileNo;
+	}
+	public void setEndUserMobileNo(String endUserMobileNo) {
+		this.endUserMobileNo = endUserMobileNo;
+	}
+	public String getEndUserEmailId() {
+		return endUserEmailId;
+	}
+	public void setEndUserEmailId(String endUserEmailId) {
+		this.endUserEmailId = endUserEmailId;
 	}
 	public String getErrorMessage() {
 		return errorMessage;

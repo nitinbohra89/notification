@@ -25,7 +25,8 @@ public class UserDAOImpl implements UserDAO {
 
 	private static final String CREATE_USER_SQL = "INSERT INTO USER " + "(username,password,role,store_id,created_by)"
 			+ "VALUES(?,?,?,?,?)";
-	private static final String UPDATE_USER_SQL = "UPDATE USER SET " + "password=?,updated_by=?,update_ts=? WHERE username=?";
+	private static final String UPDATE_USER_SQL = "UPDATE USER SET " + "name=?,password=?,email=?,"
+			+ "mobile=?,mobile_otp=?,email_otp=?,updated_by=?,update_ts=? WHERE username=?";
 	private static final String GET_USER_SQL = "SELECT * FROM USER";
 	private static final String GET_USER_BY_ID_SQL = "SELECT * FROM USER WHERE username=?";
 	private static final String DELETE_USER_SQL = "DELETE FROM USER WHERE username=?";
@@ -58,7 +59,13 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserEntity update(UserEntity userEntity) {
 		JdbcTemplate jdt = dbUtility.geJdbcTemplate();
-		int rowCount = jdt.update(UPDATE_USER_SQL, new Object[] { userEntity.getPassword(),
+		int rowCount = jdt.update(UPDATE_USER_SQL, new Object[] {
+				userEntity.getName(),
+				userEntity.getPassword(),
+				userEntity.getEmailId(),
+				userEntity.getMobileNo(),
+				userEntity.getMobileOTP(),
+				userEntity.getEmailOTP(),
 				userEntity.getUpdatedBy(),
 				new Timestamp(new Date().getTime()), userEntity.getUserName() });
 		if (rowCount == 0)
@@ -113,6 +120,11 @@ class UserMapper implements RowMapper<UserEntity> {
 		}
 		UserEntity user = new UserEntity();
 		user.setUserName(rs.getString("username"));
+		user.setName(rs.getString("name"));
+		user.setMobileNo(rs.getString("mobile"));
+		user.setMobileOTP(rs.getString("mobile_otp"));
+		user.setEmailOTP(rs.getString("email_otp"));
+		user.setEmailId(rs.getString("email"));
 		user.setPassword(rs.getString("password"));
 		user.setRole(rs.getString("role"));
 		user.setStoreId(rs.getLong("store_id"));

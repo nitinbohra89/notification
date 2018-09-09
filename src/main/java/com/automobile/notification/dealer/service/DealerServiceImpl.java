@@ -23,10 +23,7 @@ public class DealerServiceImpl implements DealerService {
 	private VehicleModelDAO vehicleModelDAO;
 	
 	public void processDealer(ServiceOrder serviceOrder) throws DealerException,VehicleModelException{
-		DealerEntity dealerEntity = extractDealerFromServiceOrder(serviceOrder);
-		DealerValidator.validateAttributes(dealerEntity);
-		VehicleModelValidator.validateAttributes(serviceOrder);
-		
+		DealerEntity dealerEntity = extractDealerFromServiceOrder(serviceOrder);		
 		DealerEntity dealer=dealerDAO.getDealerByNameOrId(dealerEntity.getDealerName(),dealerEntity.getDealerId());
 		if(dealer==null){
 				dealerDAO.create(dealerEntity);

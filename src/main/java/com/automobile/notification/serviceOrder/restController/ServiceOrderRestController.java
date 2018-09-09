@@ -33,7 +33,7 @@ public class ServiceOrderRestController {
 	@Autowired
 	private ServiceOrderService serviceOrderService;
 
-	@GetMapping(produces = "application/json; charset=UTF-8")
+	@GetMapping(produces = "application/json")
 	public ServiceOrderResponse getServiceOrders(@RequestParam String username, @RequestParam String token,
 			@RequestParam Integer index, @RequestParam String value, HttpServletResponse response) {
 		System.out.println("getServiceOrders Controller");
@@ -46,8 +46,7 @@ public class ServiceOrderRestController {
 	}
 
 	@PostMapping(produces = "application/json; charset=UTF-8")
-	public ServiceOrderResponse uploadServiceOrders(@RequestBody ServiceOrderRequest serviceOrderRequest,
-			@RequestParam String username, @RequestParam String token, HttpServletResponse response) {
+	public ServiceOrderResponse uploadServiceOrders(@RequestBody ServiceOrderRequest serviceOrderRequest, HttpServletResponse response) {
 		System.out.println("getServiceOrders Controller POST");
 	ServiceOrderResponse sor = serviceOrderService.uploadServiceOrders(serviceOrderRequest.getServiceOrders());
 		return sor;

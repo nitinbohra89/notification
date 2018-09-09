@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -59,11 +60,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
                 .exceptionHandling().authenticationEntryPoint( restAuthenticationEntryPoint ).and()
                 .authorizeRequests()
+                .antMatchers("/").permitAll()
                 .antMatchers("/**/login").permitAll()
+                .antMatchers("/**/helloagain").permitAll()
+                .antMatchers("/**/index.html").permitAll()
+                .antMatchers("/**/resetpassword").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated().and()
                 .addFilterAfter(new TokenAuthenticationFilter(tokenHelper, userService),UsernamePasswordAuthenticationFilter.class);
 
         http.csrf().disable();
+    }
+    
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+    	web.ignoring().antMatchers("/auth", "/index.html");
     }
 }

@@ -16,7 +16,6 @@ public class StoreServiceImpl implements StoreService {
 	private StoreDAO storeDAO;
 
 	public void processStore(ServiceOrder serviceOrder) throws StoreException {
-		StoreValidator.validateAttributes(serviceOrder);
 		StoreEntity storeEntity = extractStoreFromServiceOrder(serviceOrder);
 		StoreEntity store = storeDAO.getStoreById(storeEntity.getStoreId());
 		if (store == null) {

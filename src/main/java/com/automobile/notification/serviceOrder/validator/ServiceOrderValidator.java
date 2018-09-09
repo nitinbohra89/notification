@@ -4,10 +4,10 @@ import com.automobile.notification.serviceOrder.exception.ServiceOrderException;
 import com.automobile.notification.serviceOrder.model.ServiceOrder;
 import com.automobile.notification.utility.DateUtility;
 
-public class ServiceOrderValidator {
+public class ServiceOrderValidator implements Validator{
 	private static String DATE_FORMAT = "dd/MM/yyyy";
 
-	public static void validateAttributes(ServiceOrder serviceOrder) throws ServiceOrderException {
+	public void validateAttributes(ServiceOrder serviceOrder) throws Exception {
 		
 		if (serviceOrder.getServiceOrderId() == null) {
 			throw new ServiceOrderException("Service Order is required.");

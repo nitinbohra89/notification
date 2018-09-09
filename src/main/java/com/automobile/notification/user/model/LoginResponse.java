@@ -1,12 +1,21 @@
-package com.automobile.notification.spring.security.model;
+package com.automobile.notification.user.model;
 
 public class LoginResponse {
+	private String username;
     private String access_token;
     private Integer expires_in;
     private Integer errorCode;
     private String errorMessage;
 
-    public Integer getErrorCode() {
+    public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Integer getErrorCode() {
 		return errorCode;
 	}
 
@@ -27,8 +36,9 @@ public class LoginResponse {
         this.expires_in = null;
     }
 
-    public LoginResponse(String access_token, Integer expires_in,Integer errorCode, String errorMessage) {
-        this.access_token = access_token;
+    public LoginResponse(String username,String access_token, Integer expires_in,Integer errorCode, String errorMessage) {
+        this.username=username;
+    	this.access_token = access_token;
         this.expires_in = expires_in;
         this.errorCode=errorCode;
         this.errorMessage=errorMessage;

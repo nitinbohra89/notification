@@ -16,14 +16,11 @@ public class VehicleServiceImpl implements VehicleService {
 	VehicleDAO vehicleDAO;
 
 	public void processVehicle(ServiceOrder serviceOrder) throws VehicleException {
-		VehicleValidator.validateAttributes(serviceOrder);
 		VehicleEntity vehicleEntity = extractVehicleFromServiceOrder(serviceOrder);
-
 		VehicleEntity vehicle = vehicleDAO.getVehicleByChesis(vehicleEntity.getChassis());
 		if (vehicle == null)
 			vehicleDAO.create(vehicleEntity);
-
-	}
+		}
 
 	public VehicleEntity extractVehicleFromServiceOrder(ServiceOrder serviceOrder) throws VehicleException {
 		try {

@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class ServiceOrderEntity {
+public class HistoricalServiceOrderEntity {
 	private Long serviceOrderId;
 	private String serviceOrderType;
 	private LocalDate serviceOrderOpenDate;
@@ -87,38 +87,6 @@ public class ServiceOrderEntity {
 		this.operationPerformed2 = operationPerformed2;
 	}
 
-	public int getNextServiceDueYear() {
-		return nextServiceDueYear;
-	}
-
-	public void setNextServiceDueYear(int nextServiceDueYear) {
-		this.nextServiceDueYear = nextServiceDueYear;
-	}
-
-	public int getNextServiceDueMonth() {
-		return nextServiceDueMonth;
-	}
-
-	public void setNextServiceDueMonth(int nextServiceDueMonth) {
-		this.nextServiceDueMonth = nextServiceDueMonth;
-	}
-
-	public int getNextServiceDueDay() {
-		return nextServiceDueDay;
-	}
-
-	public void setNextServiceDueDay(int nextServiceDueDay) {
-		this.nextServiceDueDay = nextServiceDueDay;
-	}
-
-	public int getNotificationCount() {
-		return notificationCount;
-	}
-
-	public void setNotificationCount(int notificationCount) {
-		this.notificationCount = notificationCount;
-	}
-
 	public LocalDate getServiceOrderOpenDate() {
 		return serviceOrderOpenDate;
 	}
@@ -149,6 +117,38 @@ public class ServiceOrderEntity {
 
 	public void setLastNotifiedDate(LocalDate lastNotifiedDate) {
 		this.lastNotifiedDate = lastNotifiedDate;
+	}
+
+	public int getNextServiceDueYear() {
+		return nextServiceDueYear;
+	}
+
+	public void setNextServiceDueYear(int nextServiceDueYear) {
+		this.nextServiceDueYear = nextServiceDueYear;
+	}
+
+	public int getNextServiceDueMonth() {
+		return nextServiceDueMonth;
+	}
+
+	public void setNextServiceDueMonth(int nextServiceDueMonth) {
+		this.nextServiceDueMonth = nextServiceDueMonth;
+	}
+
+	public int getNextServiceDueDay() {
+		return nextServiceDueDay;
+	}
+
+	public void setNextServiceDueDay(int nextServiceDueDay) {
+		this.nextServiceDueDay = nextServiceDueDay;
+	}
+
+	public int getNotificationCount() {
+		return notificationCount;
+	}
+
+	public void setNotificationCount(int notificationCount) {
+		this.notificationCount = notificationCount;
 	}
 
 	public String getEndUserName() {
